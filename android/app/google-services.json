@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "861973667353",
+    "firebase_url": "https://backendtcc-79d2b-default-rtdb.firebaseio.com",
+    "project_id": "backendtcc-79d2b",
+    "storage_bucket": "backendtcc-79d2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861973667353:android:5c9cb7dab5967c15a19488",
+        "android_client_info": {
+          "package_name": "com.example.tcc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861973667353-1egvoupro1jsgpcu8sc0vj2lpkjld106.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuRS7xS9q7AHjURNsree1t8t0API4yr7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861973667353-1egvoupro1jsgpcu8sc0vj2lpkjld106.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
