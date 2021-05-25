@@ -1,17 +1,25 @@
 class User {
-  final email = String;
-  final nome = String;
-  final senha = String;
-  final tel = String;
-}
+  final String nome;
+  final String tel;
+  final String espec;
+  final String instReg;
+  final String numInscricao;
 
-class UserPaciente extends User {
-  final dataNasc = DateTime;
-  final cpf = String;
-}
+  User({
+    this.nome,
+    this.tel,
+    this.espec,
+    this.instReg,
+    this.numInscricao,
+  });
 
-class UserProfissional extends User {
-  final espec = String;
-  final instReg = String;
-  final numInscricao = String;
+  Map<String, dynamic> toJson() {
+    return {
+      'nome': nome,
+      'tel': tel,
+      'espec': espec,
+      'instReg': instReg,
+      'numInsc': numInscricao,
+    };
+  }
 }

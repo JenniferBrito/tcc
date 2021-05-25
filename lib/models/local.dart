@@ -1,8 +1,28 @@
 class Local {
-  final nome = String;
-  final rua = String;
-  final numero = String;
-  final bairro = String;
-  final cidade = String;
-  final tel = String;
+  final String nome;
+  final String rua;
+  final String numero;
+  final String bairro;
+  final String cidade;
+  final String tel;
+
+  Local({
+    this.nome,
+    this.rua,
+    this.numero,
+    this.bairro,
+    this.cidade,
+    this.tel,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'nome': nome,
+      'rua': rua,
+      'numero': numero,
+      'bairro': bairro,
+      'cidade': cidade,
+      'tel': tel,
+    };
+  }
 }

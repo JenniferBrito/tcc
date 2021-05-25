@@ -1,8 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/button_builder.dart';
-import 'package:tcc/providers/cadastro_user.dart';
-import 'providers/login_user.dart';
+import 'package:tcc/providers/auth_type_selector.dart';
+import 'package:tcc/utils/app_routes.dart';
+import 'package:tcc/views/cadastro_local.dart';
+import 'package:tcc/views/edit_doc.dart';
+import 'package:tcc/views/edit_user.dart';
+
+import 'views/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,51 +20,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tela inicial',
       theme: ThemeData.light(),
-      home: Scaffold(
-        body: AuthTypeSelector(),
-      ),
-    );
-  }
-}
-
-class AuthTypeSelector extends StatelessWidget {
-  void _pushPage(BuildContext context, Widget page) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => page),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tela inicial'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            child: SignInButtonBuilder(
-              icon: Icons.person_add,
-              backgroundColor: Colors.indigo,
-              text: 'Registrar',
-              onPressed: () => _pushPage(context, Cadastro()),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            child: SignInButtonBuilder(
-              icon: Icons.verified_user,
-              backgroundColor: Colors.orange,
-              text: 'Login',
-              onPressed: () => _pushPage(context, Login()),
-            ),
-          )
-        ],
-      ),
+      home: CadastroLocal(),
+      /*  routes: {
+        AppRoutes.EDIT_PACIENTE: (ctx) => EditUSer(),
+        AppRoutes.EDIT_PROFISSIONAL: (ctx) => EditProfissional(),
+        
+      }, */
     );
   }
 }
