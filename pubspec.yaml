@@ -33,6 +33,7 @@ dependencies:
   cloud_firestore: ^0.16.0+1
   provider: ^5.0.0
   flutter_form_builder: ^3.14.1
+  firestore_search: ^0.0.9
   
   
 

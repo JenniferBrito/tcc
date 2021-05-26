@@ -87,4 +87,6 @@ class _CadastroLocalState extends State<CadastroLocal> {
       );
     }
   }
+
+ 
 }

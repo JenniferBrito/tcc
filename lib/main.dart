@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tcc/providers/auth_type_selector.dart';
+import 'package:tcc/providers/search.dart';
 import 'package:tcc/utils/app_routes.dart';
 import 'package:tcc/views/cadastro_local.dart';
 import 'package:tcc/views/edit_doc.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tela inicial',
       theme: ThemeData.light(),
-      home: CadastroLocal(),
+      home: SearchFeed(),
       /*  routes: {
         AppRoutes.EDIT_PACIENTE: (ctx) => EditUSer(),
         AppRoutes.EDIT_PROFISSIONAL: (ctx) => EditProfissional(),

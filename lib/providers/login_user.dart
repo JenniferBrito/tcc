@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
                 final User user = _auth.currentUser;
                 if (user == null) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('No one has signed in.'),
+                    content: Text('Nenhum login efetuado.'),
                   ));
                   return;
                 }
@@ -39,10 +39,10 @@ class _LoginState extends State<Login> {
 
                 final String uid = user.uid;
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('$uid has successfully signed out.'),
+                  content: Text('$uid saiu com sucesso.'),
                 ));
               },
-              child: const Text('Sign out'),
+              child: const Text('Sair'),
             );
           })
         ],
@@ -112,7 +112,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                   alignment: Alignment.center,
                   child: SignInButton(
                     Buttons.Email,
-                    text: 'Sign In',
+                    text: 'Login',
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         await _signInWithEmailAndPassword();
