@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+/* import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tcc/models/user.dart';
@@ -73,11 +73,15 @@ class _SearchFeedState extends State<SearchFeed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: Container(
+
         child: Column(
+
           children: <Widget>[
             Text("", style: TextStyle(fontSize: 20)),
             Padding(
+              
               padding:
                   const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 30.0),
               child: TextField(
@@ -89,11 +93,15 @@ class _SearchFeedState extends State<SearchFeed> {
                 child: ListView.builder(
               itemCount: _resultsList.length,
               itemBuilder: (BuildContext context, int index) =>
-                  buildDocCard(context, _resultsList[index]),
-            )),
+                  UserInformation(),
+            
+            ),
+            
+            ),
           ],
         ),
       ),
     );
   }
 }
+ */

@@ -6,7 +6,8 @@ import 'package:tcc/utils/app_routes.dart';
 import 'package:tcc/views/cadastro_local.dart';
 import 'package:tcc/views/edit_doc.dart';
 import 'package:tcc/views/edit_user.dart';
-
+import 'package:tcc/widgets/doc_card.dart';
+import 'package:tcc/providers/doc_detail.dart';
 import 'views/home_screen.dart';
 
 Future<void> main() async {
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tela inicial',
       theme: ThemeData.light(),
-      home: SearchFeed(),
+      home: ListDoc(),
       /*  routes: {
         AppRoutes.EDIT_PACIENTE: (ctx) => EditUSer(),
         AppRoutes.EDIT_PROFISSIONAL: (ctx) => EditProfissional(),

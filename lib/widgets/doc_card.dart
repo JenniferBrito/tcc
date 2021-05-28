@@ -1,34 +1,68 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:tcc/models/user.dart';
+import 'package:tcc/providers/doc_detail.dart';
 
-Widget buildDocCard(
-  BuildContext context,
-  DocumentSnapshot document,
-) {
-  final user = User.fromSnapshot(document);
+class ListDoc extends StatefulWidget {
+  @override
+  _ListDocState createState() => _ListDocState();
+}
 
-  return new Container(
-    child: Card(
-      child: InkWell(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                child: Row(children: <Widget>[
-                  Text(
-                    user.nome,
-                  ),
-                  Spacer(),
-                ]),
-              ),
-            ],
-          ),
+class _ListDocState extends State<ListDoc> {
+  Future _data;
+
+  Future getProfissionais() async {
+    var firestore = FirebaseFirestore.instance;
+
+    QuerySnapshot qn = await firestore.collection("profissionais").get();
+
+    return qn.docs;
+  }
+
+  navigateToDetail(DocumentSnapshot post) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DocDetail(
+          post: post,
         ),
-        onTap: () => {},
       ),
-    ),
-  );
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _data = getProfissionais();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: FutureBuilder(
+        future: _data,
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text('Aguarde...'),
+            );
+          } else {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text('Profissionais'),
+              ),
+              body: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (_, index) {
+                  return ListTile(
+                    title: Text(snapshot.data[index].data()['nome']),
+                    onTap: () => navigateToDetail(snapshot.data[index].data()),
+                  );
+                },
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
 }
