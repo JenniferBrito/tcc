@@ -23,11 +23,12 @@ class MyApp extends StatelessWidget {
       title: 'Tela inicial',
       theme: ThemeData.light(),
       home: ListDoc(),
-      /*  routes: {
+      routes: {
         AppRoutes.EDIT_PACIENTE: (ctx) => EditUSer(),
-        AppRoutes.EDIT_PROFISSIONAL: (ctx) => EditProfissional(),
-        
-      }, */
+        AppRoutes.EDIT_PROFISSIONAL: (ctx) => EditDoc(),
+        AppRoutes.DOC_DETAIL: (ctx) => DocDetail(),
+        AppRoutes.LIST_DOC: (ctx) => ListDoc(),
+      },
     );
   }
 }

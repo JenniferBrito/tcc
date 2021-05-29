@@ -43,7 +43,7 @@ class _ListDocState extends State<ListDoc> {
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: Text('Aguarde...'),
+              child: CircularProgressIndicator(),
             );
           } else {
             return Scaffold(
@@ -55,7 +55,7 @@ class _ListDocState extends State<ListDoc> {
                 itemBuilder: (_, index) {
                   return ListTile(
                     title: Text(snapshot.data[index].data()['nome']),
-                    onTap: () => navigateToDetail(snapshot.data[index].data()),
+                    onTap: () => navigateToDetail(snapshot.data[index]),
                   );
                 },
               ),
