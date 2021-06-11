@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // This is called "ratings" in the backend.
@@ -24,11 +23,4 @@ class Review {
   })  : id = null,
         timestamp = null,
         reference = null;
-
-
-    
- 
-
-
-  
 }

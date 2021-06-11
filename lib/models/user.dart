@@ -6,6 +6,7 @@ class Usuario {
   final String espec;
   final String instReg;
   final String numInsc;
+  final String uid;
   final double avgRating;
   final int numRatings;
 
@@ -15,6 +16,7 @@ class Usuario {
     this.espec,
     this.instReg,
     this.numInsc,
+    this.uid,
     this.avgRating,
     this.numRatings,
   });
@@ -26,6 +28,7 @@ class Usuario {
       'espec': espec,
       'instReg': instReg,
       'numInsc': numInsc,
+      'uid': uid,
     };
   }
 
@@ -35,6 +38,7 @@ class Usuario {
         espec = snapshot.data()['espec'],
         instReg = snapshot.data()['instReg'],
         numInsc = snapshot.data()['numInsc'],
+        uid = snapshot.data()['uid'],
         avgRating = snapshot.data()['avgRating'].toDouble(),
         numRatings = snapshot.data()['numRatings'];
 
@@ -44,6 +48,7 @@ class Usuario {
         espec = json['espec'],
         instReg = json['instReg'],
         numInsc = json['numInsc'],
+        uid = json['uid'],
         avgRating = json['avgRating'],
         numRatings = json['numRatings'];
 }

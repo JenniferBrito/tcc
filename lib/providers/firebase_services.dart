@@ -4,13 +4,11 @@ import 'package:tcc/models/user.dart';
 import 'package:tcc/providers/review_doc.dart';
 
 class FirebaseService {
-  final String uid;
-  final FirebaseAuth auth;
-
-  FirebaseService({
-    this.uid,
-    this.auth,
-  });
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String uid;
+  String id;
+  FirebaseFirestore agenda = FirebaseFirestore.instance;
+  Usuario profissional;
 
   final CollectionReference pacienteCollection =
       FirebaseFirestore.instance.collection('pacientes');
@@ -18,8 +16,20 @@ class FirebaseService {
   final CollectionReference profissionaisCollection =
       FirebaseFirestore.instance.collection('profissionais');
 
+  final CollectionReference profissionaisAgenda = FirebaseFirestore.instance
+      .collection('profissionais')
+      .doc()
+      .collection('agenda');
+
+  getId() {
+    docId = auth.currentUser.uid.toString();
+    return docId;
+  }
+
   final CollectionReference locaisCollection =
       FirebaseFirestore.instance.collection('locais');
+
+  String docId;
 
   Future<void> cadastroLocal(
     String nome,
@@ -29,7 +39,7 @@ class FirebaseService {
     String cidade,
     String tel,
   ) async {
-    return await locaisCollection.doc(uid).set({
+    return await locaisCollection.doc().set({
       'nome': nome,
       'rua': rua,
       'numero': numero,
@@ -39,17 +49,83 @@ class FirebaseService {
     });
   }
 
+  Future<void> addAgenda(
+    String local,
+    String cidade,
+    DateTime dia,
+    String valor,
+  ) async {
+    try {
+      return await FirebaseFirestore.instance
+          .collection('profissionais')
+          .doc(auth.currentUser.uid)
+          .collection('agenda')
+          .doc()
+          .set({
+        'uid': FirebaseFirestore.instance
+            .collection('profissionais')
+            .doc(auth.currentUser.uid)
+            .collection('agenda')
+            .doc()
+            .id
+            .toString(),
+        'local': local,
+        'cidade': cidade,
+        'dia': dia.toString(),
+        'valor': valor,
+      });
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> setPaciente(
+    String nome,
+    String tel,
+    String numInsc,
+    String instReg,
+  ) async {
+    String uid = auth.currentUser.uid.toString();
+    return await pacienteCollection.doc(uid).set({
+      'nome': nome,
+      'tel': tel,
+      'numInsc': numInsc,
+      'instReg': instReg,
+      'uid': uid,
+    });
+  }
+
   Future<void> updatePaciente(
     String nome,
     String tel,
     String numInsc,
     String instReg,
   ) async {
-    return await pacienteCollection.doc(uid).set({
+    return await pacienteCollection.doc(uid).update({
       'nome': nome,
       'tel': tel,
       'numInsc': numInsc,
       'instReg': instReg,
+    });
+  }
+
+  Future<void> setProfissional(
+    String nome,
+    String tel,
+    String espec,
+    String numInsc,
+    String instReg,
+  ) async {
+    String uid = auth.currentUser.uid.toString();
+    return await profissionaisCollection.doc(uid).set({
+      'nome': nome,
+      'tel': tel,
+      'espec': espec,
+      'numInsc': numInsc,
+      'instReg': instReg,
+      'uid': uid,
+      'avgRatings': null,
+      'numRatings': null
     });
   }
 
@@ -60,7 +136,7 @@ class FirebaseService {
     String numInsc,
     String instReg,
   ) async {
-    return await profissionaisCollection.doc(uid).set({
+    return await profissionaisCollection.doc(uid).update({
       'nome': nome,
       'tel': tel,
       'espec': espec,
@@ -69,11 +145,11 @@ class FirebaseService {
     });
   }
 
-  Future<void> addReview({String profissionalId, Review review}) {
+  Future<void> addReview({String profissionalId, Review review, id}) {
     final profissional = FirebaseFirestore.instance
         .collection('profissionais')
         .doc(profissionalId);
-    final newReview = profissional.collection('ratings').doc();
+    final newReview = FirebaseFirestore.instance.collection('ratings').doc();
 
     return FirebaseFirestore.instance.runTransaction((Transaction transaction) {
       return transaction

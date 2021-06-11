@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tcc/providers/firebase_services.dart';
-import 'package:tcc/widgets/app_drawer.dart';
+import 'package:tcc/utils/app_routes.dart';
 
-class EditUSer extends StatefulWidget {
+class RegisterUser extends StatefulWidget {
   @override
-  _EditUSerState createState() => _EditUSerState();
+  _RegisterUserState createState() => _RegisterUserState();
 }
 
-class _EditUSerState extends State<EditUSer> {
+class _RegisterUserState extends State<RegisterUser> {
   final FirebaseService sendForm = FirebaseService();
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-
+  bool _success;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Editar Perfil'),
       ),
-      drawer: AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: FormBuilder(
@@ -56,11 +55,23 @@ class _EditUSerState extends State<EditUSer> {
                   hintText: 'CPF ou RG',
                 ),
               ),
-              TextButton(
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: TextButton(
                   autofocus: false,
                   clipBehavior: Clip.none,
                   child: Text('Salvar'),
-                  onPressed: () => _submit()),
+                  onPressed: () async {
+                    if (_formKey.currentState.validate()) {
+                      _submit();
+                      if (_success) {
+                        Navigator.of(context).pushNamed(AppRoutes.HOME);
+                      }
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -70,12 +81,18 @@ class _EditUSerState extends State<EditUSer> {
 
   void _submit() {
     if (_formKey.currentState.saveAndValidate()) {
-      sendForm.updatePaciente(
+      sendForm.setPaciente(
         _formKey.currentState.value['nome'],
         _formKey.currentState.value['tel'],
-        _formKey.currentState.value['instReg'],
         _formKey.currentState.value['numInsc'],
+        _formKey.currentState.value['instReg'],
       );
+
+      setState(() {
+        return _success = true;
+      });
+    } else {
+      _success = false;
     }
   }
 }

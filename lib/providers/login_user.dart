@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:tcc/utils/app_routes.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -8,10 +9,12 @@ class Login extends StatefulWidget {
   final String title = 'Login';
   @override
   _LoginState createState() => _LoginState();
+
+  void signOut() {}
 }
 
 class _LoginState extends State<Login> {
-  User user;
+   User user;
 
   @override
   void initState() {
@@ -35,7 +38,7 @@ class _LoginState extends State<Login> {
                   ));
                   return;
                 }
-                await _signOut();
+                await signOut();
 
                 final String uid = user.uid;
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -58,7 +61,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<void> _signOut() async {
+  Future<void> signOut() async {
     await _auth.signOut();
   }
 }
@@ -146,6 +149,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
           content: Text('${user.email} login efetuado com sucesso'),
         ),
       );
+      Navigator.of(context).pushNamed(AppRoutes.HOME_DOC);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

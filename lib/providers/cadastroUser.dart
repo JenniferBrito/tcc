@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/button_builder.dart';
+import 'package:tcc/utils/app_routes.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-/// Entrypoint example for registering via Email/Password.
 class CadastroUser extends StatefulWidget {
-  /// The page title.
-  final String title = 'Registration';
+  final String title = 'Cadastrar';
 
   @override
   State<StatefulWidget> createState() => _CadastroUserState();
@@ -18,8 +17,11 @@ class _CadastroUserState extends State<CadastroUser> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  bool _success;
+  bool _success = true;
   String _userEmail = '';
+  String dropdownValue = 'Paciente';
+  String newValue = '';
+  String value = '';
 
   @override
   Widget build(BuildContext context) {
@@ -28,66 +30,86 @@ class _CadastroUserState extends State<CadastroUser> {
         title: Text(widget.title),
       ),
       body: Form(
-          key: _formKey,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(labelText: 'Email'),
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
+        key: _formKey,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Insira email válido';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(labelText: 'Senha'),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Insira uma senha';
+                    }
+                    return null;
+                  },
+                  obscureText: true,
+                ),
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
                   ),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(labelText: 'Password'),
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                    obscureText: true,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    alignment: Alignment.center,
-                    child: SignInButtonBuilder(
-                      icon: Icons.person_add,
-                      backgroundColor: Colors.blueGrey,
-                      onPressed: () async {
-                        if (_formKey.currentState.validate()) {
-                          await _register();
+                  onChanged: (newValue) => dropdownValue = newValue,
+                  items: <String>['Paciente', 'Profissional de saúde']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  alignment: Alignment.center,
+                  child: SignInButtonBuilder(
+                    icon: Icons.person_add,
+                    backgroundColor: Colors.blueGrey,
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        await _register();
+                        if (_success) {
+                          if (dropdownValue == 'Paciente') {
+                            Navigator.of(context)
+                                .popAndPushNamed(AppRoutes.ADD_DETAIL);
+                          } else {
+                            Navigator.of(context)
+                                .popAndPushNamed(AppRoutes.ADD_DOC_DETAIL);
+                          }
                         }
-                      },
-                      text: 'Register',
-                    ),
+                      }
+                    },
+                    text: 'Cadastrar',
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(_success == null
-                        ? ''
-                        : (_success
-                            ? 'Successfully registered $_userEmail'
-                            : 'Registration failed')),
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 
   @override
   void dispose() {
-    // Clean up the controller when the Widget is disposed
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -99,6 +121,7 @@ class _CadastroUserState extends State<CadastroUser> {
       password: _passwordController.text,
     ))
         .user;
+    // ignore: unnecessary_null_comparison
     if (user != null) {
       setState(() {
         _success = true;

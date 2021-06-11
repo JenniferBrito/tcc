@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tcc/providers/firebase_services.dart';
@@ -10,6 +11,7 @@ class CadastroLocal extends StatefulWidget {
 class _CadastroLocalState extends State<CadastroLocal> {
   final FirebaseService sendForm = FirebaseService();
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  FirebaseFirestore uid;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +89,4 @@ class _CadastroLocalState extends State<CadastroLocal> {
       );
     }
   }
-
- 
 }
