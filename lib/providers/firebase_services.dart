@@ -7,6 +7,7 @@ class FirebaseService {
   FirebaseAuth auth = FirebaseAuth.instance;
   String uid;
   String id;
+  String idAgenda;
   FirebaseFirestore agenda = FirebaseFirestore.instance;
   Usuario profissional;
 
@@ -24,6 +25,16 @@ class FirebaseService {
   getId() {
     docId = auth.currentUser.uid.toString();
     return docId;
+  }
+
+  getAgendaId() {
+    idAgenda = FirebaseFirestore.instance
+        .collection('profissionais')
+        .doc()
+        .collection('agenda')
+        .doc()
+        .id;
+    print(idAgenda);
   }
 
   final CollectionReference locaisCollection =
@@ -49,12 +60,33 @@ class FirebaseService {
     });
   }
 
-  Future<void> addAgenda(
+  Future<void> updateAgenda(
+    String agendaId,
     String local,
     String cidade,
     DateTime dia,
     String valor,
   ) async {
+    try {
+      return await FirebaseFirestore.instance
+          .collection('profissionais')
+          .doc(auth.currentUser.uid)
+          .collection('agenda')
+          .doc(agendaId)
+          .update({
+        'local': local,
+        'cidade': cidade,
+        'dia': dia.toString(),
+        'valor': valor,
+      });
+    } on Error catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> addAgenda(
+      String local, String cidade, DateTime dia, String valor,
+      {bool isAgendado = false}) async {
     try {
       return await FirebaseFirestore.instance
           .collection('profissionais')
@@ -73,10 +105,20 @@ class FirebaseService {
         'cidade': cidade,
         'dia': dia.toString(),
         'valor': valor,
+        'isAgendado': isAgendado
       });
     } on Exception catch (e) {
       print(e);
     }
+  }
+
+  deleteAgenda(String agendaId) {
+    FirebaseFirestore.instance
+        .collection('profissionais')
+        .doc(auth.currentUser.uid)
+        .collection('agenda')
+        .doc(agendaId)
+        .delete();
   }
 
   Future<void> setPaciente(

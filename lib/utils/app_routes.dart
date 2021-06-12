@@ -15,4 +15,6 @@ class AppRoutes {
   static const ADD_DOC_DETAIL = '/adddocdetail';
   static const ADD_AGENDA = '/addagenda';
   static const DOC_AGENDA = '/docagenda';
+  static const EDIT_AGENDA = '/editagenda';
+  static const DELETE_AGENDA = '/deleteagenda';
 }

@@ -18,6 +18,8 @@ import 'package:tcc/views/edit_user.dart';
 import 'package:tcc/widgets/doc_card.dart';
 import 'package:tcc/providers/doc_detail.dart';
 
+import 'dialog/delete_agenda_dialog.dart';
+import 'views/edit_agenda.dart';
 import 'views/home.dart';
 import 'views/home_doc.dart';
 
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.HOME_DOC: (ctx) => HomeDoc(),
         AppRoutes.ADD_AGENDA: (ctx) => NovaAgenda(),
         AppRoutes.DOC_AGENDA: (ctx) => AgendaDoc(),
+        AppRoutes.EDIT_AGENDA: (ctx) => EditAgenda(),
+        AppRoutes.DELETE_AGENDA: (ctx) => DeleteAgenda(),
       },
     );
   }

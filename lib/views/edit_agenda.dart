@@ -1,14 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:tcc/providers/firebase_services.dart';
 
-import 'firebase_services.dart';
+class EditAgenda extends StatefulWidget {
+  final String post;
+  const EditAgenda({this.post});
 
-class NovaAgenda extends StatefulWidget {
   @override
-  _NovaAgendaState createState() => _NovaAgendaState();
+  _EditAgendaState createState() => _EditAgendaState();
 }
 
-class _NovaAgendaState extends State<NovaAgenda> {
+class _EditAgendaState extends State<EditAgenda> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   final FirebaseService sendForm = FirebaseService();
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
@@ -71,11 +77,13 @@ class _NovaAgendaState extends State<NovaAgenda> {
   void _submit() {
     try {
       if (_formKey.currentState.saveAndValidate()) {
-        sendForm.addAgenda(
+        sendForm.updateAgenda(
+          widget.post,
           _formKey.currentState.value['local'],
           _formKey.currentState.value['cidade'],
           _formKey.currentState.value['dia'],
           _formKey.currentState.value['valor'],
+          
         );
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Sucesso!'),

@@ -4,7 +4,6 @@ import 'package:tcc/providers/login_user.dart';
 import 'package:tcc/utils/app_routes.dart';
 
 class AppDrawer extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -29,7 +28,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.person),
-            title: Text('Profissionais'),
+            title: Text('Editar perfil'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(AppRoutes.EDIT_PACIENTE);

@@ -47,7 +47,7 @@ class _ListDocState extends State<ListDoc> {
               child: CircularProgressIndicator(),
             );
           } else {
-            var length;
+          
             return Scaffold(
               appBar: AppBar(
                 title: Text('Profissionais'),

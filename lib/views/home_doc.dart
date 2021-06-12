@@ -1,11 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:tcc/utils/app_routes.dart';
 import 'package:tcc/widgets/app_drawer.dart';
 
 class HomeDoc extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +38,6 @@ class HomeDoc extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: GridTile(
               child: GestureDetector(
-                
                 onTap: () =>
                     Navigator.of(context).pushNamed(AppRoutes.DOC_AGENDA),
                 child: Icon(Icons.medical_services, size: 36),
