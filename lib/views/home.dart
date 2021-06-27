@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tcc/utils/app_routes.dart';
-import 'package:tcc/widgets/app_drawer.dart';
+import 'package:tcc/widgets/pac_drawer.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -9,7 +9,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      drawer: AppDrawer(),
+      drawer: PacDrawer(),
       body: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -53,7 +53,7 @@ class Home extends StatelessWidget {
             child: GridTile(
               child: GestureDetector(
                 onTap: () => // adicionar página com consultas marcadas
-                    Navigator.of(context).pushNamed(AppRoutes.LIST_DOC),
+                    Navigator.of(context).pushNamed(AppRoutes.CONSULTAS),
                 child: Icon(
                   Icons.schedule,
                   size: 36,

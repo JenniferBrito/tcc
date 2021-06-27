@@ -5,17 +5,17 @@ import 'package:tcc/utils/app_routes.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class Login extends StatefulWidget {
+class LoginProf extends StatefulWidget {
   final String title = 'Login';
   @override
-  _LoginState createState() => _LoginState();
+  _LoginProfState createState() => _LoginProfState();
 
   void signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 }
 
-class _LoginState extends State<Login> {
+class _LoginProfState extends State<LoginProf> {
   User user;
 
   @override
@@ -146,7 +146,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
       ))
           .user;
 
-      Navigator.of(context).pushNamed(AppRoutes.HOME);
+      Navigator.of(context).pushNamed(AppRoutes.HOME_DOC);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -154,7 +154,6 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
         ),
       );
     } catch (e) {
-      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Falha ao fazer login'),

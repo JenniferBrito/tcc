@@ -13,7 +13,6 @@ class AgendaDoc extends StatefulWidget {
 
 class _AgendaDocState extends State<AgendaDoc> {
   String uid = '';
-  List<Map<dynamic, dynamic>> lists = [];
   var currentUser = FirebaseAuth.instance.currentUser;
   FirebaseService fireService;
 
@@ -60,6 +59,7 @@ class _AgendaDocState extends State<AgendaDoc> {
         .collection('profissionais')
         .doc(currentUser.uid)
         .collection('agenda')
+        .orderBy('dia')
         .snapshots();
 
     return Scaffold(
@@ -73,11 +73,14 @@ class _AgendaDocState extends State<AgendaDoc> {
       body: StreamBuilder(
         stream: dbRef,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           if (!snapshot.hasData) {
             Center(
-              child: Center(
-                child: Text('Não existem horários disponíveis'),
-              ),
+              child: Text('Não existem horários disponíveis'),
             );
           }
           return ListView(

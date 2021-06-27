@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tcc/providers/doc_detail.dart';
-import 'package:tcc/widgets/app_drawer.dart';
 
 class ListDoc extends StatefulWidget {
   @override
@@ -9,13 +8,12 @@ class ListDoc extends StatefulWidget {
 }
 
 class _ListDocState extends State<ListDoc> {
-  Future _data;
-
   Future getProfissionais() async {
     var firestore = FirebaseFirestore.instance;
-
-    QuerySnapshot qn = await firestore.collection("profissionais").get();
-
+    QuerySnapshot qn = await firestore
+        .collection("profissionais")
+        .orderBy("nome", descending: false)
+        .get();
     return qn.docs;
   }
 
@@ -30,6 +28,7 @@ class _ListDocState extends State<ListDoc> {
     );
   }
 
+  Future _data;
   @override
   void initState() {
     super.initState();
@@ -47,12 +46,10 @@ class _ListDocState extends State<ListDoc> {
               child: CircularProgressIndicator(),
             );
           } else {
-          
             return Scaffold(
               appBar: AppBar(
                 title: Text('Profissionais'),
               ),
-              drawer: AppDrawer(),
               body: ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (_, index) {

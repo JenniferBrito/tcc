@@ -40,7 +40,7 @@ class HomeDoc extends StatelessWidget {
               child: GestureDetector(
                 onTap: () =>
                     Navigator.of(context).pushNamed(AppRoutes.DOC_AGENDA),
-                child: Icon(Icons.medical_services, size: 36),
+                child: Icon(Icons.schedule_outlined, size: 36),
               ),
               footer: GridTileBar(
                 backgroundColor: Colors.blueAccent,
@@ -52,10 +52,24 @@ class HomeDoc extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: GridTile(
               child: GestureDetector(
-                onTap: () => // adicionar página com consultas marcadas
+                onTap: () => Navigator.of(context)
+                    .pushNamed(AppRoutes.CONSULTAS_MARCADAS),
+                child: Icon(Icons.medical_services_outlined, size: 36),
+              ),
+              footer: GridTileBar(
+                backgroundColor: Colors.blueAccent,
+                title: Text('Consultas marcadas'),
+              ),
+            ),
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: GridTile(
+              child: GestureDetector(
+                onTap: () =>
                     Navigator.of(context).pushNamed(AppRoutes.DOC_AGENDA),
                 child: Icon(
-                  Icons.schedule,
+                  Icons.star_border_outlined,
                   size: 36,
                 ),
               ),

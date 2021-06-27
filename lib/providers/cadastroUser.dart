@@ -90,7 +90,8 @@ class _CadastroUserState extends State<CadastroUser> {
                           if (dropdownValue == 'Paciente') {
                             Navigator.of(context)
                                 .popAndPushNamed(AppRoutes.ADD_DETAIL);
-                          } else {
+                          }
+                          if (dropdownValue == 'Profissional de saúde') {
                             Navigator.of(context)
                                 .popAndPushNamed(AppRoutes.ADD_DOC_DETAIL);
                           }
@@ -121,7 +122,7 @@ class _CadastroUserState extends State<CadastroUser> {
       password: _passwordController.text,
     ))
         .user;
-    // ignore: unnecessary_null_comparison
+
     if (user != null) {
       setState(() {
         _success = true;

@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:tcc/dialog/review_dialog.dart';
-import 'package:tcc/models/user.dart';
-import 'package:tcc/widgets/review.dart';
+import 'package:tcc/widgets/view_agenda.dart';
 import 'firebase_services.dart';
-import 'review_doc.dart';
 
 class DocDetail extends StatefulWidget {
   final DocumentSnapshot post;
@@ -21,46 +16,19 @@ class DocDetail extends StatefulWidget {
 
 class _DocDetailState extends State<DocDetail> {
   FirebaseService data;
-  Usuario _doc;
-  StreamSubscription<QuerySnapshot> _currentReviewSubscription;
 
-  _DocDetailState() {
-    var firestore =
-        FirebaseFirestore.instance.collection('users').doc(widget.post['uid']);
-    _currentReviewSubscription = firestore
-        .collection('ratings')
-        .orderBy('timestamp', descending: true)
-        .snapshots()
-        .listen((QuerySnapshot reviewSnap) {
-      setState(() {
-        _reviews = reviewSnap.docs.map((DocumentSnapshot doc) {
-          return Review.fromSnapshot(doc);
-        }).toList();
-      });
-    });
-  }
-  @override
-  void dispose() {
-    _currentReviewSubscription?.cancel();
-    super.dispose();
-  }
-
-  void _onCreateReviewPressed(BuildContext context) async {
-    final newReview = await showDialog<Review>(
-      context: context,
-      builder: (_) => ReviewCreateDialog(),
+  void navigateToDetail(DocumentSnapshot post) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ViewAgenda(
+          post: post,
+        ),
+      ),
     );
-    if (newReview != null) {
-      // Save the review
-
-      return data.addReview(
-        profissionalId: _doc.uid,
-        review: newReview,
-      );
-    }
   }
 
-  List<Review> _reviews = <Review>[];
+  _DocDetailState();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,41 +36,42 @@ class _DocDetailState extends State<DocDetail> {
         title: Text(widget.post['nome']),
         actions: [
           IconButton(
-              onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                        content: const Text('Agenda'),
-                        duration: const Duration(seconds: 2)),
-                  ),
+              onPressed: () {
+                navigateToDetail(widget.post);
+                print(widget.post.id.toString());
+              },
               icon: Icon(Icons.calendar_today_outlined)),
         ],
       ),
-      body: Column(
+      body: ListView(
         children: [
-          Text(widget.post['espec'],
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.start),
-          Text(
-            '${widget.post['instReg']}: ${widget.post['numInsc']}',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 20,
+          Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(children: [
+                Text(widget.post['espec'],
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start),
+                Text(
+                  '${widget.post['instReg']}: ${widget.post['numInsc']}',
+                  style: TextStyle(color: Colors.grey, fontSize: 20),
+                  textAlign: TextAlign.justify,
+                ),
+                Text(
+                  'Telefone de contato: ${widget.post['tel']}',
+                  style: TextStyle(color: Colors.grey, fontSize: 20),
+                  textAlign: TextAlign.justify,
+                ),
+                //add classificação e review
+              ]),
             ),
-            textAlign: TextAlign.justify,
           ),
-          //add classificação e review
-          _reviews.isNotEmpty
-              ? _reviews
-                  .map((Review review) => DocReview(review: review))
-                  .toList()
-              : Text('${widget.post['nome']} não possui reviews.')
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _onCreateReviewPressed(context),
       ),
     );
   }

@@ -81,7 +81,7 @@ class _AddDocState extends State<AddDoc> {
                     if (_formKey.currentState.validate()) {
                       _submit();
                       if (_success) {
-                        Navigator.of(context).pushNamed(AppRoutes.HOME);
+                        Navigator.of(context).pushNamed(AppRoutes.HOME_DOC);
                       }
                     }
                   },

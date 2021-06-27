@@ -2,9 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tcc/utils/app_routes.dart';
 
-class AppDrawer extends StatelessWidget {
-  
-
+class PacDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<void> signOut() async {
@@ -37,25 +35,25 @@ class AppDrawer extends StatelessWidget {
             title: Text('Editar perfil'),
             onTap: () {
               Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.EDIT_PROFISSIONAL);
+                  .pushReplacementNamed(AppRoutes.EDIT_PACIENTE);
             },
           ),
           Divider(
             thickness: 1,
           ),
           ListTile(
-            leading: Icon(Icons.schedule_outlined),
-            title: Text('Minha Agenda'),
+            leading: Icon(Icons.medical_services),
+            title: Text('Profissionais'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.DOC_AGENDA);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.LIST_DOC);
             },
           ),
           Divider(
             thickness: 1,
           ),
           ListTile(
-            leading: Icon(Icons.star_border_outlined),
-            title: Text('Minhas Avaliações'),
+            leading: Icon(Icons.schedule),
+            title: Text('Minhas Consultas'),
             onTap: () {
               // adicionar página de histórico
               Navigator.of(context).pushReplacementNamed(AppRoutes.LIST_DOC);

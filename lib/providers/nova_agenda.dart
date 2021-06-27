@@ -24,37 +24,25 @@ class _NovaAgendaState extends State<NovaAgenda> {
           key: _formKey,
           child: ListView(
             children: [
-              // get nome
               FormBuilderTextField(
                 decoration: InputDecoration(labelText: 'Local de atendimento'),
                 attribute: "local",
               ),
-              // get telefone
               FormBuilderTextField(
                 attribute: "cidade",
-                validators: [
-                  //FormBuilderValidators.max(13),
-                  FormBuilderValidators.required(),
-                ],
+                validators: [FormBuilderValidators.required()],
                 decoration: InputDecoration(labelText: 'Cidade'),
               ),
               FormBuilderDateTimePicker(
                 decoration: InputDecoration(labelText: 'Data'),
                 attribute: "dia",
-                validators: [
-                  FormBuilderValidators.required(),
-                ],
+                validators: [FormBuilderValidators.required()],
               ),
-              // get especialização
               FormBuilderTextField(
                 attribute: "valor",
-                validators: [
-                  FormBuilderValidators.required(),
-                ],
+                validators: [FormBuilderValidators.required()],
                 decoration: InputDecoration(labelText: 'Valor da consulta'),
               ),
-
-              // set dados
               TextButton(
                 autofocus: false,
                 clipBehavior: Clip.none,

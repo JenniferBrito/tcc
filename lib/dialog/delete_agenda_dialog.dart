@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 import 'package:tcc/providers/firebase_services.dart';
 
@@ -19,19 +18,14 @@ class _DeleteAgendaState extends State<DeleteAgenda> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('Deletar horário?'),
-      content: Container(
-        width: math.min(MediaQuery.of(context).size.width, 16),
-        height: math.min(MediaQuery.of(context).size.height, 18),
-      ),
       actions: <Widget>[
         TextButton(
           child: Text('Cancelar'),
           onPressed: () => Navigator.pop(context, null),
         ),
-        ElevatedButton(
+        TextButton(
           child: Text('Deletar'),
-          onPressed: () => Navigator.pop(
-            context,
+          onPressed: () => Navigator.of(context).pop(
             fireService.deleteAgenda(widget.post),
           ),
         ),

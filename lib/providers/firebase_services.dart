@@ -27,16 +27,6 @@ class FirebaseService {
     return docId;
   }
 
-  getAgendaId() {
-    idAgenda = FirebaseFirestore.instance
-        .collection('profissionais')
-        .doc()
-        .collection('agenda')
-        .doc()
-        .id;
-    print(idAgenda);
-  }
-
   final CollectionReference locaisCollection =
       FirebaseFirestore.instance.collection('locais');
 
@@ -65,7 +55,7 @@ class FirebaseService {
     String local,
     String cidade,
     DateTime dia,
-    String valor,
+    String valor
   ) async {
     try {
       return await FirebaseFirestore.instance
@@ -94,13 +84,6 @@ class FirebaseService {
           .collection('agenda')
           .doc()
           .set({
-        'uid': FirebaseFirestore.instance
-            .collection('profissionais')
-            .doc(auth.currentUser.uid)
-            .collection('agenda')
-            .doc()
-            .id
-            .toString(),
         'local': local,
         'cidade': cidade,
         'dia': dia.toString(),
@@ -167,7 +150,7 @@ class FirebaseService {
       'instReg': instReg,
       'uid': uid,
       'avgRatings': null,
-      'numRatings': null
+      'numRatings': null,
     });
   }
 

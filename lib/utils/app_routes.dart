@@ -17,4 +17,8 @@ class AppRoutes {
   static const DOC_AGENDA = '/docagenda';
   static const EDIT_AGENDA = '/editagenda';
   static const DELETE_AGENDA = '/deleteagenda';
+  static const VIEW_AGENDA = '/viewagenda';
+  static const AGENDAR = '/agendar';
+  static const CONSULTAS = '/consultas';
+  static const CONSULTAS_MARCADAS = '/consultasmarcadas';
 }

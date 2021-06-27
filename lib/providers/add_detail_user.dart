@@ -31,7 +31,6 @@ class _RegisterUserState extends State<RegisterUser> {
               FormBuilderTextField(
                 attribute: "tel",
                 validators: [
-                  //FormBuilderValidators.max(13),
                   FormBuilderValidators.required(),
                 ],
                 decoration: InputDecoration(labelText: 'Telefone de Contato'),
